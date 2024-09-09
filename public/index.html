@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team Scores</title>
+    <style>
+      table {
+        width: 50%;
+        margin: 20px auto;
+        border-collapse: collapse;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center">Team Scores</h1>
+    <button id="scrapeButton">Fetch Scores</button>
+    <table>
+      <thead>
+        <tr>
+          <th>Team</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody id="scoresTable"></tbody>
+    </table>
+
+    <script>
+      document
+        .getElementById("scrapeButton")
+        .addEventListener("click", async () => {
+          try {
+            const response = await fetch("/scrape");
+            if (!response.ok) throw new Error("Network response was not ok");
+            const data = await response.json();
+
+            const tableBody = document.getElementById("scoresTable");
+            tableBody.innerHTML = ""; // Clear existing rows
+            data.forEach((team) => {
+              const row = document.createElement("tr");
+              const teamName = document.createElement("td");
+              const teamScore = document.createElement("td");
+
+              teamName.textContent = team.name;
+              teamScore.textContent = team.score;
+
+              row.appendChild(teamName);
+              row.appendChild(teamScore);
+              tableBody.appendChild(row);
+            });
+          } catch (error) {
+            console.error("Error fetching scores:", error);
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "team-scoring-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/handler.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "puppeteer": "^23.2.0",
+    "serverless-http": "^3.2.0"
+  }
+}
