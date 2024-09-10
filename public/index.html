@@ -64,7 +64,12 @@
               body: JSON.stringify({ url: url }), // Send URL as JSON data
             });
     
+            if (!response.ok) {
+              throw new Error(`Server error: ${response.statusText}`);
+            }
+    
             const result = await response.json(); // Parse the response as JSON
+            console.log(result);
     
             // Get the table body element
             const tableBody = document.getElementById("scoresTable");
@@ -72,27 +77,29 @@
             // Clear previous table rows
             tableBody.innerHTML = "";
     
-            
-            // Populate table with the new data
-            result.forEach((item) => {
-              const row = document.createElement("tr");
+            if (Array.isArray(result)) {
+              // Populate table with the new data
+              result.forEach((item) => {
+                const row = document.createElement("tr");
     
-              const nameCell = document.createElement("td");
-              nameCell.textContent = item.name.trim(); // Remove extra spaces and newlines
-              row.appendChild(nameCell);
+                const nameCell = document.createElement("td");
+                nameCell.textContent = item.name.trim(); // Remove extra spaces and newlines
+                row.appendChild(nameCell);
     
-              const scoreCell = document.createElement("td");
-              scoreCell.textContent = item.score;
-              row.appendChild(scoreCell);
+                const scoreCell = document.createElement("td");
+                scoreCell.textContent = item.score;
+                row.appendChild(scoreCell);
     
-              tableBody.appendChild(row);
-            });
+                tableBody.appendChild(row);
+              });
+            } else {
+              document.getElementById("response").innerText = "Unexpected data format received.";
+            }
           } catch (error) {
-            document.getElementById("response").innerText =
-              "Error occurred: " + error.message;
+            document.getElementById("response").innerText = "Error occurred: " + error.message;
           }
         });
-    </script>
+    </script>    
     
   </body>
 </html>
