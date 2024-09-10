@@ -4,12 +4,13 @@
   "description": "",
   "main": "src/handler.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "express": "^4.19.2",
     "puppeteer": "^23.2.0",
     "serverless-http": "^3.2.0"
