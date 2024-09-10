@@ -8,7 +8,8 @@ const bodyParser = require("body-parser");
 
 // initialize an express app by calling express() which can be used to define routes and handle HTTP requests
 const app = express();
-const PORT = 3000;
+// the port is assigned by Heroku
+const PORT = process.env.PORT || 3000;
 app.use(express.static("public"));
 app.use(bodyParser.json());
 
@@ -24,28 +25,9 @@ app.post("/scrape", async (req, res) => {
   }
 
   try {
-    console.log(`Starting Puppeteer scrape for URL: ${url}`);
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
-    //const page = await browser.newPage();
-    //await page.goto(url, { waitUntil: "networkidle2" });
-
     const scores = await scrapeTeams(url)
-    // Scrape data from the page
-    // const pageContent = await page.evaluate(() => {
-    //   return document.querySelector("body").innerText;
-    // });
-
-     await browser.close();
-    // console.log(`Scraped content successfully: ${pageContent}`);
-
-    // Send the scraped data back to the client
-    console.log(scores)
     res.json(scores);
   } catch (err) {
-    console.error(`Error occurred while scraping: ${err.message}`);
     res.status(500).json({ message: `Error: ${err.message}` }); // Return the error as JSON
   }
 });
