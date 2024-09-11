@@ -70,8 +70,8 @@
             const tableBody = document.getElementById("scoresTable");
     
             // Clear previous table rows
-            tableBody.innerHTML = result;
-    
+            console.log(result);
+            document.getElementById("response").innerText = JSON.stringify(result, null, 2);    
             
             // Populate table with the new data
             result.forEach((item) => {
