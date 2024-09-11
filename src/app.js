@@ -13,9 +13,6 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static("public"));
 app.use(bodyParser.json());
 
-// define a route handler that listens for http GET requests made to the /scores endpoint
-// when a user sends a request to the http://localhost:3000/scores endpoint this function will be executed
-
 // req is for incoming requests from the client
 // res if for outgoing response you will send back to the client
 app.post("/scrape", async (req, res) => {
