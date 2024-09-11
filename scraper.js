@@ -3,7 +3,7 @@ const puppeteer = require("puppeteer");
 async function scrapeTeams(url) {
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath: "/usr/bin/chromium-browser",
+    executablePath: puppeteer.executablePath(),
     args: [
       `--no-sandbox`,
       `--headless`,
