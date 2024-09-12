@@ -3,7 +3,7 @@ const puppeteer = require("puppeteer");
 
 async function scrapeTeams(url) {
   const browser = await puppeteer.launch({
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
     headless: true,
     args: [
       `--no-sandbox`,
