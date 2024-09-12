@@ -1,9 +1,10 @@
 const puppeteer = require("puppeteer");
 
+
 async function scrapeTeams(url) {
   const browser = await puppeteer.launch({
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined
     headless: true,
-    executablePath: puppeteer.executablePath(),
     args: [
       `--no-sandbox`,
       `--headless`,
