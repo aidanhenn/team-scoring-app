@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer");
+require("dontenv").config()
 
 async function scrapeTeams(url) {
   const browser = await puppeteer.launch({

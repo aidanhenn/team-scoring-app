@@ -1,5 +1,4 @@
 const express = require("express");
-const puppeteer = require("puppeteer");
 // import the scrapeTeams function from a module names scraper.js
 // const{scrapeTeams} uses object destructuring to extract the scrapeTeams function from the exports of the scraper.js module
 const { scrapeTeams } = require("../scraper");
