@@ -1,9 +1,12 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
+const chromiumPath =
+process.env.CHROME_BIN || "/app/.apt/usr/bin/google-chrome";
 require("dotenv").config();
 
 async function scrapeTeams(url) {
   const browser = await puppeteer.launch({
     headless: true, // Ensure headless mode
+    executablePath: chromiumPath,
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",

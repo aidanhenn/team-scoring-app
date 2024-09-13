@@ -5,8 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "puppeteer install"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +15,7 @@
     "express": "^4.19.2",
     "install": "^0.13.0",
     "puppeteer": "^23.3.0",
+    "puppeteer-core": "^23.3.0",
     "serverless-http": "^3.2.0"
   }
 }
