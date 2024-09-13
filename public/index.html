@@ -34,6 +34,11 @@
       />
       <button type="submit">Scrape</button>
     </form>
+    <label for="options">Choose Gender:</label>
+    <select id="gender" required>
+      <option value="men">Men</option>
+      <option value="women">Women</option>
+    </select>
     <h1 style="text-align: center">Team Scores</h1>
     <table>
       <thead>
@@ -53,7 +58,8 @@
           event.preventDefault(); // Prevent the form from reloading the page
 
           const url = document.getElementById("urlInput").value;
-
+          const gender = document.getElementById("gender").value;
+          console.log("Gender: "+ gender)
           try {
             // Send URL to server
             const response = await fetch("/scrape", {
@@ -61,7 +67,7 @@
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ url: url }), // Send URL as JSON data
+              body: JSON.stringify({ url: url, gender: gender }), // Send URL as JSON data
             });
 
             const result = await response.json(); // Parse the response as JSON

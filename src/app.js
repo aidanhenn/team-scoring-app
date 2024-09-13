@@ -16,12 +16,13 @@ app.use(bodyParser.json());
 // res if for outgoing response you will send back to the client
 app.post("/scrape", async (req, res) => {
   const url = req.body.url;
+  const gender = req.body.gender;
   if (!url) {
     return res.status(400).json({ message: "No URL provided." });
   }
 
   try {
-    const scores = await scrapeTeams(url)
+    const scores = await scrapeTeams(url, gender)
     res.json(scores);
   } catch (err) {
     res.status(500).json({ message: `Error: ${err.message}` }); // Return the error as JSON
