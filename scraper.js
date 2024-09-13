@@ -1,12 +1,19 @@
 const puppeteer = require("puppeteer-core");
-const chromiumPath =
-process.env.CHROME_BIN || "/app/.apt/usr/bin/google-chrome";
 require("dotenv").config();
+const chromiumPath =
+  process.env.CHROME_BIN || "/app/.apt/usr/bin/google-chrome";
+const puppeteerCacheDir =
+  process.env.PUPPETEER_CACHE_DIR || "/tmp/puppeteer_cache";
+
+  if (!fs.existsSync(puppeteerCacheDir)) {
+    fs.mkdirSync(puppeteerCacheDir, { recursive: true });
+  }
 
 async function scrapeTeams(url) {
   const browser = await puppeteer.launch({
     headless: true, // Ensure headless mode
     executablePath: chromiumPath,
+    userDataDir: puppeteerCacheDir,
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
