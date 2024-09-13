@@ -1,14 +1,19 @@
 const puppeteer = require("puppeteer");
-require("dotenv").config()
+require("dotenv").config();
 
 async function scrapeTeams(url) {
   const browser = await puppeteer.launch({
-    executablePath: process.env.CHROME_BIN || null, // Heroku will set CHROME_BIN, specify path to chrome
-    headless: true,
+    headless: true, // Ensure headless mode
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
-      `--disable-dev-shm-usage`,
+      "--disable-dev-shm-usage",
+      "--disable-accelerated-2d-canvas",
+      "--disable-gpu",
+      "--no-first-run",
+      "--no-zygote",
+      "--single-process", // <- Important for Heroku
+      "--disable-extensions",
     ],
   });
 
