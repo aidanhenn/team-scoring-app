@@ -24,118 +24,134 @@
     </style>
   </head>
   <body>
-    <!-- Flex container for layout -->
-    <div class="container">
-      <!-- Inputs Section (left side) -->
-      <div class="inputs">
-        <form id="urlForm">
-          <div class="URL-input">
-            <label for="urlInput">TFRRS Performance List URL</label>
-            <input
-              type="url"
-              id="urlInput"
-              name="urlInput"
-              placeholder="https://www.example.com"
-              required
-            />
-          </div>
+    <div class="spinner-container">
+      <div id="loading"></div>
+    </div>
+    <div class="content">
+      <!-- Flex container for layout -->
+      <div class="container">
+        <!-- Inputs Section (left side) -->
+        <div class="inputs">
+          <form id="urlForm">
+            <div class="URL-input">
+              <label for="urlInput">TFRRS Performance List URL</label>
+              <input
+                type="url"
+                id="urlInput"
+                name="urlInput"
+                placeholder="https://www.example.com"
+                required
+              />
+            </div>
 
-          <div class="gender">
-            <label for="gender">Gender</label>
-            <select id="gender" required>
-              <option value="men">Men</option>
-              <option value="women">Women</option>
-            </select>
-          </div>
+            <div class="gender">
+              <label for="gender">Gender</label>
+              <select id="gender" required>
+                <option value="men">Men</option>
+                <option value="women">Women</option>
+              </select>
+            </div>
 
-          <div class="scoring-system">
-            <label for="scoringSystem">Score top </label>
-            <select id="scoringSystem" required>
-              <option value="six">6</option>
-              <option value="eight">8</option>
-            </select>
-            <span> finishers</span>
-          </div>
+            <div class="scoring-system">
+              <label for="scoringSystem">Score top </label>
+              <select id="scoringSystem" required>
+                <option value="six">6</option>
+                <option value="eight">8</option>
+              </select>
+              <span> finishers</span>
+            </div>
 
-          <button type="submit">Calculate Scores</button>
-        </form>
-      </div>
+            <button type="submit">Calculate Scores</button>
+          </form>
+        </div>
 
-      <!-- Scores Section (right side) -->
-      <div class="scores">
-        <h1 class="main-header">Team Scores</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Team</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-          <tbody id="scoresTable"></tbody>
-        </table>
-        <div id="response"></div>
+        <!-- Scores Section (right side) -->
+        <div class="scores">
+          <h1 class="main-header">Team Scores</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody id="scoresTable"></tbody>
+          </table>
+          <div id="response"></div>
+        </div>
       </div>
     </div>
-
     <script>
-      document
-        .getElementById("urlForm")
-        .addEventListener("submit", async (event) => {
-          event.preventDefault(); // Prevent the form from reloading the page
+      document.getElementById("urlForm").addEventListener("submit", async (event) => {
+  event.preventDefault(); // Prevent the form from reloading the page
 
-          const url = document.getElementById("urlInput").value;
-          const gender = document.getElementById("gender").value;
-          const scoringSystem = document.getElementById("scoringSystem").value;
-          try {
-            // Send URL to server
-            const response = await fetch("/scrape", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                url: url,
-                gender: gender,
-                scoringSystem: scoringSystem,
-              }), // Send URL as JSON data
-            });
+  const spinner = document.getElementById("loading");
+  const spinnerContainer = document.querySelector(".spinner-container");
+  const content = document.querySelector(".content");
 
-            const result = await response.json(); // Parse the response as JSON
+  // Show the spinner and hide content
+  spinnerContainer.style.display = "flex";
+  content.style.display = "none";
 
-            // Log the result to see what you're getting
-            console.log(result);
+  const url = document.getElementById("urlInput").value;
+  const gender = document.getElementById("gender").value;
+  const scoringSystem = document.getElementById("scoringSystem").value;
 
-            // Get the table body element
-            const tableBody = document.getElementById("scoresTable");
+  try {
+    // Send URL to server
+    const response = await fetch("/scrape", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        url: url,
+        gender: gender,
+        scoringSystem: scoringSystem,
+      }), // Send URL as JSON data
+    });
 
-            // Clear previous table rows
-            tableBody.innerHTML = "";
+    const result = await response.json(); // Parse the response as JSON
 
-            // Ensure result is an array
-            if (Array.isArray(result)) {
-              // Populate table with the new data
-              result.forEach((item) => {
-                const row = document.createElement("tr");
+    // Log the result to see what you're getting
+    console.log(result);
 
-                const nameCell = document.createElement("td");
-                nameCell.textContent = item.name.trim(); // Team name
-                row.appendChild(nameCell);
+    // Get the table body element
+    const tableBody = document.getElementById("scoresTable");
 
-                const scoreCell = document.createElement("td");
-                scoreCell.textContent = item.score; // Team score
-                row.appendChild(scoreCell);
+    // Clear previous table rows
+    tableBody.innerHTML = "";
 
-                tableBody.appendChild(row); // Add row to table body
-              });
-            } else {
-              document.getElementById("response").innerText =
-                "Unexpected data format received.";
-            }
-          } catch (error) {
-            document.getElementById("response").innerText =
-              "Error occurred: " + error.message;
-          }
-        });
+    // Ensure result is an array
+    if (Array.isArray(result)) {
+      // Populate table with the new data
+      result.forEach((item) => {
+        const row = document.createElement("tr");
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = item.name.trim(); // Team name
+        row.appendChild(nameCell);
+
+        const scoreCell = document.createElement("td");
+        scoreCell.textContent = item.score; // Team score
+        row.appendChild(scoreCell);
+
+        tableBody.appendChild(row); // Add row to table body
+      });
+    } else {
+      document.getElementById("response").innerText =
+        "Unexpected data format received.";
+    }
+  } catch (error) {
+    document.getElementById("response").innerText =
+      "Error occurred: " + error.message;
+  } finally {
+    // Hide spinner and show content
+    spinnerContainer.style.display = "none";
+    content.style.display = "block";
+  }
+});
+
     </script>
   </body>
 </html>
