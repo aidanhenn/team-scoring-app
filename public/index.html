@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
     <title>Team Scores</title>
     <style>
       table {
@@ -23,33 +24,58 @@
     </style>
   </head>
   <body>
-    <form id="urlForm">
-      <label for="urlInput">Enter URL to scrape:</label>
-      <input
-        type="url"
-        id="urlInput"
-        name="urlInput"
-        placeholder="https://www.example.com"
-        required
-      />
-      <button type="submit">Scrape</button>
-    </form>
-    <label for="options">Choose Gender:</label>
-    <select id="gender" required>
-      <option value="men">Men</option>
-      <option value="women">Women</option>
-    </select>
-    <h1 style="text-align: center">Team Scores</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Team</th>
-          <th>Score</th>
-        </tr>
-      </thead>
-      <tbody id="scoresTable"></tbody>
-    </table>
-    <div id="response"></div>
+    <!-- Flex container for layout -->
+    <div class="container">
+      <!-- Inputs Section (left side) -->
+      <div class="inputs">
+        <form id="urlForm">
+          <div class="URL-input">
+            <label for="urlInput">TFRRS Performance List URL</label>
+            <input
+              type="url"
+              id="urlInput"
+              name="urlInput"
+              placeholder="https://www.example.com"
+              required
+            />
+          </div>
+
+          <div class="gender">
+            <label for="gender">Gender</label>
+            <select id="gender" required>
+              <option value="men">Men</option>
+              <option value="women">Women</option>
+            </select>
+          </div>
+
+          <div class="scoring-system">
+            <label for="scoringSystem">Score top </label>
+            <select id="scoringSystem" required>
+              <option value="six">6</option>
+              <option value="eight">8</option>
+            </select>
+            <span> finishers</span>
+          </div>
+
+          <button type="submit">Calculate Scores</button>
+        </form>
+      </div>
+
+      <!-- Scores Section (right side) -->
+      <div class="scores">
+        <h1 class="main-header">Team Scores</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Team</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody id="scoresTable"></tbody>
+        </table>
+        <div id="response"></div>
+      </div>
+    </div>
 
     <script>
       document
@@ -59,7 +85,7 @@
 
           const url = document.getElementById("urlInput").value;
           const gender = document.getElementById("gender").value;
-          console.log("Gender: "+ gender)
+          const scoringSystem = document.getElementById("scoringSystem").value;
           try {
             // Send URL to server
             const response = await fetch("/scrape", {
@@ -67,7 +93,11 @@
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ url: url, gender: gender }), // Send URL as JSON data
+              body: JSON.stringify({
+                url: url,
+                gender: gender,
+                scoringSystem: scoringSystem,
+              }), // Send URL as JSON data
             });
 
             const result = await response.json(); // Parse the response as JSON

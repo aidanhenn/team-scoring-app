@@ -17,12 +17,13 @@ app.use(bodyParser.json());
 app.post("/scrape", async (req, res) => {
   const url = req.body.url;
   const gender = req.body.gender;
+  const scoringSystem = req.body.scoringSystem;
   if (!url) {
     return res.status(400).json({ message: "No URL provided." });
   }
 
   try {
-    const scores = await scrapeTeams(url, gender)
+    const scores = await scrapeTeams(url, gender, scoringSystem);
     res.json(scores);
   } catch (err) {
     res.status(500).json({ message: `Error: ${err.message}` }); // Return the error as JSON

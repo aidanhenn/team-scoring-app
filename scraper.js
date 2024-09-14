@@ -11,7 +11,7 @@ if (!fs.existsSync(puppeteerCacheDir)) {
   fs.mkdirSync(puppeteerCacheDir, { recursive: true });
 }
 
-async function scrapeTeams(url, gender) {
+async function scrapeTeams(url, gender, scoringSystem) {
   const browser = await puppeteer.launch({
     headless: true, // Ensure headless mode
     executablePath: chromiumPath,
@@ -37,7 +37,6 @@ async function scrapeTeams(url, gender) {
   let teamScores = [];
   let addtoscore = 10;
   const genderSelector = gender === "women" ? "f" : "m";
-
   for (let j = 0; j <= 81; j++) {
     if (
       (await page.$(
@@ -47,7 +46,9 @@ async function scrapeTeams(url, gender) {
       const rows = await page.$$(
         `#list_data > div.panel-body.frame-loading-hide > div.row.gender_${genderSelector}.standard_event_hnd_${j} tbody tr`
       );
-      const numrows = Math.min(rows.length, 6);
+
+      const rowNum = scoringSystem === 'six' ? 6 : 8;
+      const numrows = Math.min(rows.length, rowNum);
 
       for (let i = 0; i < numrows; i++) {
         const row = rows[i];
@@ -76,8 +77,20 @@ async function scrapeTeams(url, gender) {
         } else {
           teamScores[index] += addtoscore;
         }
-
-        addtoscore = addtoscore === 2 ? 1 : addtoscore - 2;
+        // calculate points for next place based on scoring system
+        if (scoringSystem === "six"){
+          //score top six
+          addtoscore = addtoscore === 2 ? 1 : addtoscore - 2;
+        }
+        else if (scoringSystem === "eight"){
+          //score top eight
+          if (addtoscore > 6){
+            addtoscore = addtoscore - 2
+          }
+          else{
+            addtoscore = addtoscore -1
+          }
+        }
       }
       addtoscore = 10;
     }

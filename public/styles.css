@@ -1,0 +1,61 @@
+body {
+  background-color: #f9f9f9;
+}
+
+/* Container to hold both input section and table section */
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* Input section styles (on the left side) */
+.inputs {
+  width: 40%;
+  padding: 20px;
+}
+
+.URL-input,
+.gender,
+.scoring-system {
+  margin-bottom: 20px;
+  color: #063970;
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+}
+
+/* Scores table section (on the right side) */
+.scores {
+  width: 55%;
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+.main-header {
+  text-align: center;
+  color: #063970;
+  font-size: 50px;
+  font-weight: bolder;
+}
+
+#response {
+  margin-top: 20px;
+  color: red;
+}
