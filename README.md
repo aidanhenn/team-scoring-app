@@ -28,8 +28,8 @@ This app was built to predict scores for college track and field conferences bas
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#future">Future</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#future">Future Features</a></li>
   </ol>
 </details>
 
@@ -89,7 +89,7 @@ https://github.com/user-attachments/assets/e0fe0768-b5c2-41f4-9cf2-8c09fb121379
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Future Features
+## Future
 
 
 - Customizable predictions by filtering specific events, athletes, or teams.
