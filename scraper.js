@@ -2,8 +2,8 @@ require("dotenv").config();
 const puppeteer = require("puppeteer-core");
 const fs = require("fs");
 
-const chromiumPath =
-  process.env.CHROME_BIN || "/app/.apt/usr/bin/google-chrome";
+const chromiumPath = 'C:/Program Files/Google/Chrome/Application/chrome.exe'
+
 const puppeteerCacheDir =
   process.env.PUPPETEER_CACHE_DIR || "/tmp/puppeteer_cache";
 
