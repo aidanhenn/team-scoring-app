@@ -1,5 +1,9 @@
 #!/bin/bash
-# Fix permission errors and install Chromium
-sudo apt-get update
-sudo apt-get install -y chromium
-npm install
+set -e  # Exit on error
+
+# Update package lists and install Chromium (without sudo)
+apt-get update
+apt-get install -y chromium
+
+# Install dependencies using npm ci (ensures exact package versions)
+npm ci
