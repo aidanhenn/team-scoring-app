@@ -15,11 +15,10 @@
     "express": "^4.19.2",
     "install": "^0.13.0",
     "puppeteer": "^23.3.0",
-    "puppeteer-core": "^23.3.0",
+    "puppeteer-core": "^23.11.1",
     "serverless-http": "^3.2.0"
   },
   "engines": {
-  "node": "20.5.1"
-}
-
+    "node": "20.5.1"
+  }
 }
