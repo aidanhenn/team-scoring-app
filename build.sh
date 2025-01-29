@@ -1,7 +1,5 @@
 #!/bin/bash
-# Update system and install Chromium
-apt-get update
-apt-get install -y chromium
-
-# Install Node.js dependencies
+# Fix permission errors and install Chromium
+sudo apt-get update
+sudo apt-get install -y chromium
 npm install
